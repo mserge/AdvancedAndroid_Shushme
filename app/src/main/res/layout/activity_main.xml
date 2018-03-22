@@ -124,9 +124,16 @@
             android:id="@+id/places_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
+        <!--  (9) Add the "Powered by Google" logo and a link to Google's privacy policy here -->
+        <ImageView
+            android:onClick="onPoweredByGoogleClicked"
+            android:clickable="true"
+            android:layout_gravity="bottom|end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/powered_by_google_light"
+            />
     </LinearLayout>
 
-    <!-- TODO (9) Add the "Powered by Google" logo and a link to Google's privacy policy here -->
-    
+
 </RelativeLayout>
