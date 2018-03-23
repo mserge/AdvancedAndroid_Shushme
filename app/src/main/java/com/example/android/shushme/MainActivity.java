@@ -16,6 +16,7 @@ package com.example.android.shushme;
 * limitations under the License.
 */
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,6 +54,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS;
 
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks,
@@ -246,10 +250,23 @@ public class MainActivity extends AppCompatActivity implements
             locationPermissions.setEnabled(false);
         }
 
-        //TODO (3) Initialize ringer permissions checkbox
+        // (3) Initialize ringer permissions checkbox
+        CheckBox ringerCheckBox = (CheckBox) findViewById(R.id.ringer_permission_checkbox);
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(SDK_INT > 24 && !nm.isNotificationPolicyAccessGranted()){
+            ringerCheckBox.setChecked(true);
+        } else{
+            ringerCheckBox.setChecked(true);
+            ringerCheckBox.setEnabled(false);
+        }
     }
 
-    // TODO (2) Implement onRingerPermissionsClicked to launch ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+
+    //  (2) Implement onRingerPermissionsClicked to launch ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+    public void onRingerPermissionsClicked(View v){
+        Intent intent = new Intent(ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+        startActivity(intent);
+    }
 
     public void onLocationPermissionClicked(View view) {
         ActivityCompat.requestPermissions(MainActivity.this,
